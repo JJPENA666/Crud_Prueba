@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Crud</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+            
+                <h1 class="display-6 fw-bold">Edificio</h1>
+    
+                <form action="/tasks/new/" method="POST" class="card card-body bg-secundary">
+                    {% csrf_token %}
+
+                    <label for="title">Name:</label>
+                    <input type="text" name="name" placeholder="write a name" class="form-control mb-2">
+                    
+                    <label for="description">Description:</label>
+                    <textarea name="description" rows="3" placeholder="write a description" class="form-control mb-2"></textarea>
+                    
+                    <label for="title">Department:</label>
+                    <input type="text" name="department" placeholder="write a department" class="form-control mb-2">
+
+                    <label for="title">Direcction</label>
+                    <input type="text" name="direcction" placeholder="write a direcction" class="form-control mb-2">
+
+                    <label for="title">Color</label>
+                    <input type="text" name="color" placeholder="write a color" class="form-control mb-2">
+
+                    <button class="btn btn-success">SAVE</button>
+            
+                </form>
+            
+                {% for task in tasks %}     
+                    <div class="card card-body text-black mt-2 d-flex flex-row justify-content-between">
+                        <div>                       
+                            <h4>{{task.name}}</h4>
+                            <p>{{task.description}}</p>
+                            <p>{{task.direcction}}</p>
+                            <p>{{task.department}}</p>
+                            <p>{{task.color}}</p>
+                        </div> 
+                        <form action="{% url 'delete_task' task.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-danger btn-cm">Delete</button>
+                        </form>
+                    </div>
+                {% empty %}    
+                    <h1 class="display-4 text-center">No hay tarea</h1>
+                {% endfor %}
+         
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
